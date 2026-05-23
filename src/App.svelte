@@ -132,6 +132,35 @@
   <div class="overlay error">データの読み込みに失敗しました: {errorMessage}</div>
 {:else}
   <div class="viewer">
+    <div class="status-bar">
+      <button
+        class="info-btn"
+        onclick={() => (showAbout = true)}
+        aria-label="このサイトについて"
+      >
+        ℹ️
+      </button>
+      <span class="status-center">
+        <span class="episode-info">{#if typeof currentEpisode.index === "number"}第{currentEpisode.index}話{/if}「{currentEpisode.title}」</span>
+        <a
+          class="share-btn"
+          href={xIntentUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Xで共有"
+        >
+          <img src="/michixa/x-icon.svg" alt="" aria-hidden="true" class="share-icon" />
+        </a>
+      </span>
+      <button
+        class="menu-btn"
+        onclick={() => (showEpisodeMenu = true)}
+        aria-label="話を選択"
+      >
+        📕
+      </button>
+    </div>
+
     <div class="image-area">
       <div class="nav-side nav-side-prev">
         {#if prevEpisode}
@@ -165,35 +194,6 @@
           </button>
         {/if}
       </div>
-    </div>
-
-    <div class="status-bar">
-      <button
-        class="info-btn"
-        onclick={() => (showAbout = true)}
-        aria-label="このサイトについて"
-      >
-        ℹ️
-      </button>
-      <span class="status-center">
-        <span class="episode-info">{#if typeof currentEpisode.index === "number"}第{currentEpisode.index}話{/if}「{currentEpisode.title}」</span>
-        <a
-          class="share-btn"
-          href={xIntentUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Xで共有"
-        >
-          <img src="/michixa/x-icon.svg" alt="" aria-hidden="true" class="share-icon" />
-        </a>
-      </span>
-      <button
-        class="menu-btn"
-        onclick={() => (showEpisodeMenu = true)}
-        aria-label="話を選択"
-      >
-        📕
-      </button>
     </div>
   </div>
 {/if}
@@ -253,7 +253,7 @@
     >
       <h2 id="modal-title">このサイトについて</h2>
       <p>
-       道草屋ばっくやーど漫画の非公式ビューワーです。<br />全ての画像の権利は桃色CODE様に帰属します。
+        道草屋ばっくやーど漫画の非公式ビューワーです。<br />全ての画像の権利は桃色CODE様に帰属します。
       </p>
       <p>
         桃色CODE様:
@@ -377,7 +377,7 @@
 
   .status-bar {
     position: fixed;
-    bottom: 0;
+    top: 0;
     left: 0;
     right: 0;
     display: flex;
