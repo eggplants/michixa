@@ -109,6 +109,11 @@
     }
   }
 
+  $effect(() => {
+    if (loadState !== "ready" || !currentEpisode) return;
+    history.replaceState(null, "", buildShareUrl(currentEpisode.index));
+  });
+
   let showAbout = $state(false);
   let showEpisodeMenu = $state(false);
 
