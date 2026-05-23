@@ -10,7 +10,7 @@
     "source=${localEnv:HOME}/.config/gh,target=/home/vscode/.config/gh,type=bind"
   ],
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+    "ghcr.io/devcontainers/features/docker-in-docker:": {
       "moby": false
     },
     "ghcr.io/devcontainers-extra/features/mise:1": {},
