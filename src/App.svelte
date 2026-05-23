@@ -134,19 +134,14 @@
   <div class="viewer">
     <div class="image-area">
       <div class="nav-side nav-side-prev">
-        <button
-          class="nav-btn"
-          onclick={prev}
-          disabled={currentEpisodeIdx === 0}
-          aria-label="前の話"
-        >
-          <span class="nav-arrow">←</span>
-          {#if prevEpisode}
+        {#if prevEpisode}
+          <button class="nav-btn" onclick={prev} aria-label="前の話">
+            <span class="nav-arrow">←</span>
             <span class="nav-info">
               {#if typeof prevEpisode.index === "number"}第{prevEpisode.index}話<br />{/if}{prevEpisode.title}
             </span>
-          {/if}
-        </button>
+          </button>
+        {/if}
       </div>
 
       <div class="image-container">
@@ -161,19 +156,14 @@
       </div>
 
       <div class="nav-side nav-side-next">
-        <button
-          class="nav-btn"
-          onclick={next}
-          disabled={currentEpisodeIdx === episodes.length - 1}
-          aria-label="次の話"
-        >
-          <span class="nav-arrow">→</span>
-          {#if nextEpisode}
+        {#if nextEpisode}
+          <button class="nav-btn" onclick={next} aria-label="次の話">
+            <span class="nav-arrow">→</span>
             <span class="nav-info">
               {#if typeof nextEpisode.index === "number"}第{nextEpisode.index}話<br />{/if}{nextEpisode.title}
             </span>
-          {/if}
-        </button>
+          </button>
+        {/if}
       </div>
     </div>
 
@@ -183,7 +173,7 @@
         onclick={() => (showAbout = true)}
         aria-label="このサイトについて"
       >
-        ℹ
+        ℹ️
       </button>
       <span class="status-center">
         <span class="episode-info">{#if typeof currentEpisode.index === "number"}第{currentEpisode.index}話{/if}「{currentEpisode.title}」</span>
@@ -202,7 +192,7 @@
         onclick={() => (showEpisodeMenu = true)}
         aria-label="話を選択"
       >
-        ☰
+        📕
       </button>
     </div>
   </div>
@@ -367,13 +357,8 @@
     line-height: 1;
   }
 
-  .nav-btn:hover:not(:disabled) {
+  .nav-btn:hover {
     background: rgba(0, 0, 0, 0.85);
-  }
-
-  .nav-btn:disabled {
-    opacity: 0.25;
-    cursor: default;
   }
 
   .nav-info {
@@ -382,6 +367,12 @@
     text-align: center;
     line-height: 1.4;
     word-break: break-all;
+    min-height: calc(0.65rem * 1.4 * 3);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .status-bar {
@@ -393,7 +384,8 @@
     align-items: center;
     background: rgba(0, 0, 0, 0.88);
     color: #e0e0e0;
-    padding: 0.5rem 1rem env(safe-area-inset-bottom, 0);
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
     font-size: 0.95rem;
     font-family:
       "Hiragino Kaku Gothic Pro",
@@ -458,35 +450,7 @@
     height: 1rem;
   }
 
-  .share-btn:hover {
-    color: #fff;
-  }
-
-  .info-btn {
-    background: none;
-    border: 3px solid rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 1rem;
-    cursor: pointer;
-    width: 1.5rem;
-    height: 1.5rem;
-    padding: 0;
-    line-height: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition:
-      color 0.2s,
-      border-color 0.2s;
-    flex-shrink: 0;
-  }
-
-  .info-btn:hover {
-    color: #fff;
-    border-color: #fff;
-  }
-
+  .info-btn,
   .menu-btn {
     background: none;
     border: none;
@@ -504,6 +468,8 @@
     flex-shrink: 0;
   }
 
+  .share-btn:hover,
+  .info-btn:hover,
   .menu-btn:hover {
     color: #fff;
   }
