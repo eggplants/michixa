@@ -1,9 +1,31 @@
 import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { VitePWA } from 'vite-plugin-pwa'
 import { defineConfig } from 'vite-plus'
 
 export default defineConfig({
   base: '/michixa',
-  plugins: [svelte()],
+  plugins: [
+    svelte(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.ico', 'pwa-192.png', 'pwa-512.png'],
+      manifest: {
+        name: '非公式道草屋ばっくやーど漫画ビューア',
+        short_name: 'michixa',
+        description: '道草屋ばっくやーど漫画の非公式ビューワー',
+        theme_color: '#f09199',
+        background_color: '#f09199',
+        display: 'standalone',
+        scope: '/michixa/',
+        start_url: '/michixa/',
+        icons: [
+          { src: 'pwa-192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'pwa-512.png', sizes: '512x512', type: 'image/png' },
+          { src: 'pwa-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+        ],
+      },
+    }),
+  ],
   fmt: {
     arrowParens: 'avoid',
     bracketSameLine: true,
