@@ -122,6 +122,39 @@
     if (e.key === "ArrowLeft") prev();
     if (e.key === "ArrowRight") next();
   }
+
+  const SWIPE_THRESHOLD = 50;
+  let dragStartX = $state<number | null>(null);
+
+  function onDragStart(x: number): void {
+    dragStartX = x;
+  }
+
+  function onDragEnd(x: number): void {
+    if (dragStartX === null) return;
+    const dx = x - dragStartX;
+    dragStartX = null;
+    if (Math.abs(dx) < SWIPE_THRESHOLD) return;
+    if (dx < 0) next();
+    else prev();
+  }
+
+  function handleTouchStart(e: TouchEvent): void {
+    onDragStart(e.touches[0].clientX);
+  }
+
+  function handleTouchEnd(e: TouchEvent): void {
+    onDragEnd(e.changedTouches[0].clientX);
+  }
+
+  function handleMouseDown(e: MouseEvent): void {
+    e.preventDefault();
+    onDragStart(e.clientX);
+  }
+
+  function handleMouseUp(e: MouseEvent): void {
+    onDragEnd(e.clientX);
+  }
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
@@ -161,7 +194,14 @@
       </button>
     </div>
 
-    <div class="image-area">
+    <div
+      class="image-area"
+      role="presentation"
+      ontouchstart={handleTouchStart}
+      ontouchend={handleTouchEnd}
+      onmousedown={handleMouseDown}
+      onmouseup={handleMouseUp}
+    >
       <div class="nav-side nav-side-prev">
         {#if prevEpisode}
           <button class="nav-btn" onclick={prev} aria-label="前の話">
@@ -180,6 +220,7 @@
             alt="{typeof currentEpisode.index === 'number' ? `第${currentEpisode.index}「 ` : ''}{currentEpisode.title}」 ({i + 1}/{currentEpisode.imageUrls.length})"
             class="manga-image"
             loading="lazy"
+            draggable="false"
           />
         {/each}
       </div>
@@ -295,6 +336,7 @@
 
   .image-area {
     width: 100%;
+    user-select: none;
   }
 
   .image-container {
