@@ -1,0 +1,4 @@
+{
+  "entry": ["svelte.config.ts"],
+  "ignoreDependencies": ["eslint-plugin-svelte"]
+}
