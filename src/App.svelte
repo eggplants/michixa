@@ -346,6 +346,7 @@
   .image-area {
     width: 100%;
     user-select: none;
+    min-height: calc(100vh - 5.5rem);
   }
 
   .image-container {
