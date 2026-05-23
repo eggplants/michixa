@@ -160,12 +160,12 @@
 <svelte:window onkeydown={handleKeydown} />
 
 {#if loadState === "loading"}
-  <div class="overlay">読み込み中...</div>
+  <div class="overlay" role="status" aria-live="polite">読み込み中...</div>
 {:else if loadState === "error"}
-  <div class="overlay error">データの読み込みに失敗しました: {errorMessage}</div>
+  <div class="overlay error" role="alert">データの読み込みに失敗しました: {errorMessage}</div>
 {:else}
   <div class="viewer">
-    <div class="status-bar">
+    <header class="status-bar">
       <button
         class="info-btn"
         onclick={() => (showAbout = true)}
@@ -173,7 +173,7 @@
       >
         ℹ️
       </button>
-      <span class="status-center">
+      <span class="status-center" aria-live="polite" aria-atomic="true">
         <span class="episode-info">{#if typeof currentEpisode.index === "number"}第{currentEpisode.index}話{/if}「{currentEpisode.title}」</span>
         <a
           class="share-btn"
@@ -192,57 +192,59 @@
       >
         📕
       </button>
-    </div>
+    </header>
 
-    <div
-      class="image-area"
-      role="presentation"
-      ontouchstart={handleTouchStart}
-      ontouchend={handleTouchEnd}
-      onmousedown={handleMouseDown}
-      onmouseup={handleMouseUp}
-    >
-      <div class="nav-side nav-side-prev">
+    <main aria-label="漫画ビューワー">
+      <div
+        class="image-area"
+        role="presentation"
+        ontouchstart={handleTouchStart}
+        ontouchend={handleTouchEnd}
+        onmousedown={handleMouseDown}
+        onmouseup={handleMouseUp}
+      >
+      <nav class="nav-side nav-side-prev" aria-label="前の話へ">
         {#if prevEpisode}
-          <button class="nav-btn" onclick={prev} aria-label="前の話">
-            <span class="nav-arrow">←</span>
-            <span class="nav-info">
+          <button class="nav-btn" onclick={prev} aria-label="前の話：{typeof prevEpisode.index === 'number' ? `第${prevEpisode.index}話` : ''}「{prevEpisode.title}」">
+            <span class="nav-arrow" aria-hidden="true">←</span>
+            <span class="nav-info" aria-hidden="true">
               {#if typeof prevEpisode.index === "number"}第{prevEpisode.index}話<br />{/if}{prevEpisode.title}
             </span>
           </button>
         {/if}
-      </div>
+      </nav>
 
-      <div class="image-container">
+      <figure class="image-container" aria-label="{typeof currentEpisode.index === 'number' ? `第${currentEpisode.index}話` : ''}「{currentEpisode.title}」">
         {#each currentEpisode.imageUrls as url, i}
           <img
             src={url}
-            alt="{typeof currentEpisode.index === 'number' ? `第${currentEpisode.index}「 ` : ''}{currentEpisode.title}」 ({i + 1}/{currentEpisode.imageUrls.length})"
+            alt="{typeof currentEpisode.index === 'number' ? `第${currentEpisode.index}話` : ''}{currentEpisode.title} ({i + 1}/{currentEpisode.imageUrls.length}ページ)"
             class="manga-image"
             loading="lazy"
             draggable="false"
           />
         {/each}
-      </div>
+      </figure>
 
-      <div class="nav-side nav-side-next">
+      <nav class="nav-side nav-side-next" aria-label="次の話へ">
         {#if nextEpisode}
-          <button class="nav-btn" onclick={next} aria-label="次の話">
-            <span class="nav-arrow">→</span>
-            <span class="nav-info">
+          <button class="nav-btn" onclick={next} aria-label="次の話：{typeof nextEpisode.index === 'number' ? `第${nextEpisode.index}話` : ''}「{nextEpisode.title}」">
+            <span class="nav-arrow" aria-hidden="true">→</span>
+            <span class="nav-info" aria-hidden="true">
               {#if typeof nextEpisode.index === "number"}第{nextEpisode.index}話<br />{/if}{nextEpisode.title}
             </span>
           </button>
         {/if}
+      </nav>
       </div>
-    </div>
+    </main>
   </div>
 {/if}
 
 {#if showEpisodeMenu}
   <div
     class="modal-backdrop"
-    role="presentation"
+    aria-hidden="true"
     onclick={() => (showEpisodeMenu = false)}
     onkeydown={() => {}}
   >
@@ -252,6 +254,7 @@
       aria-modal="true"
       aria-labelledby="menu-title"
       tabindex="-1"
+      aria-hidden="false"
       onclick={(e) => e.stopPropagation()}
       onkeydown={(e) => e.stopPropagation()}
     >
@@ -279,7 +282,7 @@
 {#if showAbout}
   <div
     class="modal-backdrop"
-    role="presentation"
+    aria-hidden="true"
     onclick={() => (showAbout = false)}
     onkeydown={() => {}}
   >
@@ -289,6 +292,7 @@
       aria-modal="true"
       aria-labelledby="modal-title"
       tabindex="-1"
+      aria-hidden="false"
       onclick={(e) => e.stopPropagation()}
       onkeydown={(e) => e.stopPropagation()}
     >
@@ -331,7 +335,7 @@
   .viewer {
     min-height: 100vh;
     background: #1a1a1a;
-    padding: 0 88px 2.5rem;
+    padding: 3rem 88px 2.5rem;
   }
 
   .image-area {
@@ -343,6 +347,8 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    margin: 0;
+    padding: 0;
   }
 
   .manga-image {
@@ -369,7 +375,7 @@
 
   @media (max-width: 768px) {
     .viewer {
-      padding: 0 0 2.5rem;
+      padding: 3rem 0 2.5rem;
     }
 
     .nav-side {
