@@ -12,7 +12,7 @@
 
 Launch [Dev Container](https://code.visualstudio.com/docs/devcontainers/containers) on VS Code and run `vp dev --host`.
 
-## Thanks
+## Acknowledgments
 
 - <http://momoirocode.web.fc2.com>
 - <https://github.com/iranika/momoco>
