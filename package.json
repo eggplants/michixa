@@ -1,0 +1,22 @@
+{
+  "name": "michixa",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "svelte-check && vp build",
+    "preview": "vp preview",
+    "check": "vp check && svelte-check"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.1.2",
+    "eslint-plugin-svelte": "^3.17.1",
+    "svelte": "^5.55.9",
+    "svelte-check": "^4.4.8",
+    "typescript": "~6.0.3",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "packageManager": "pnpm@11.2.2"
+}

@@ -1,0 +1,72 @@
+{
+  "name": "michixa",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:24-bookworm",
+  "workspaceFolder": "/workspaces/michixa",
+  "initializeCommand": ".devcontainer/initializeCommand.sh",
+  "postCreateCommand": ".devcontainer/postCreateCommand.sh",
+  "mounts": [
+    "source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.claude.json,target=/home/vscode/.claude.json,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.config/gh,target=/home/vscode/.config/gh,type=bind"
+  ],
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": false
+    },
+    "ghcr.io/devcontainers-extra/features/mise:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "installOhMyZsh": true,
+      "installOhMyZshConfig": true,
+      "upgradePackages": true
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code",
+        "-dbaeumer.vscode-eslint",
+        "foxundermoon.shell-format",
+        "hverlin.mise-vscode",
+        "oderwat.indent-rainbow",
+        "redhat.vscode-yaml",
+        "streetsidesoftware.code-spell-checker",
+        "svelte.svelte-vscode",
+        "timonwong.shellcheck",
+        "VoidZero.vite-plus-extension-pack",
+        "webpro.vscode-knip",
+        "yoavbls.pretty-ts-errors"
+      ],
+      "settings": {
+        "editor.defaultFormatter": "oxc.oxc-vscode",
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.oxc": "explicit"
+        },
+        "js/ts.tsdk.path": "node_modules/typescript/lib",
+        "oxc.path.oxlint": "/home/vscode/.vite-plus/current/node_modules/.bin/oxlint",
+        "oxc.path.oxfmt": "/home/vscode/.vite-plus/current/node_modules/.bin/oxfmt",
+        "oxc.fmt.configPath": "./vite.config.ts",
+        "oxc.typeAware": true,
+        // Shell
+        "shellformat.flag": "-s",
+        "shellformat.path": "/usr/local/bin/shfmt",
+        "[shellscript]": {
+          "editor.defaultFormatter": "foxundermoon.shell-format"
+        },
+        // Terminal
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.scrollback": 100000,
+        // Claude Code
+        "claudeCode.hideOnboarding": true,
+        "claudeCode.preferredLocation": "sidebar",
+        "claudeCode.selectedModel": "default",
+        "claudeCode.useTerminal": false
+      },
+      "mcp": {
+        "servers": {}
+      }
+    }
+  }
+}

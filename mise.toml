@@ -1,0 +1,38 @@
+[plugins]
+# https://github.com/voidzero-dev/vite-plus/issues/943
+vite-plus = "https://github.com/markmals/mise-vite-plus"
+
+[tools]
+"aqua:azu/dockerfile-pin" = "latest"
+claude = "latest"
+gh = "latest"
+ghalint = "latest"
+pinact = "latest"
+rg = "latest"
+shfmt = "latest"
+usage = "latest"
+vite-plus = "latest"
+
+[tasks.ghalint]
+run = "ghalint run"
+
+[tasks.shfmt]
+run = "shfmt -s"
+
+[tasks.vp-check-fix]
+run = "vp check --fix"
+
+[tasks.pin]
+depends = ["dockerfile-pin", "pinact"]
+
+[tasks.dockerfile-pin]
+run = "dockerfile-pin run --write --update --min-age 7"
+
+[tasks.pinact]
+run = "pinact run -u -min-age 7"
+
+[tasks.pre-commit]
+depends = ["ghalint", "vp-check-fix"]
+
+[tasks.pre-push]
+depends = []

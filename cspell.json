@@ -1,0 +1,42 @@
+{
+  "language": "en_US",
+  "words": [
+    "dbaeumer",
+    "foxundermoon",
+    "ghalint",
+    "hverlin",
+    "iranika",
+    "Kaku",
+    "koma",
+    "michixa",
+    "moby",
+    "momoirocode",
+    "oderwat",
+    "oxfmt",
+    "oxlint",
+    "pinact",
+    "shellcheck",
+    "shellformat",
+    "shfmt",
+    "timonwong",
+    "voidzero",
+    "webpro",
+    "yoavbls"
+  ],
+  "dictionaries": [
+    "companies",
+    "css",
+    "docker",
+    "html",
+    "markdown",
+    "misc",
+    "npm",
+    "softwareTerms",
+    "useCompounds"
+  ],
+  "ignorePaths": [".gitignore", "cspell.json"],
+  "features": {
+    "weighted-suggestions": true
+  },
+  "useGitignore": true
+}
