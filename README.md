@@ -8,6 +8,10 @@
 
 <https://egpl.dev/michixa/>
 
+## Development
+
+Launch [Dev Container](https://code.visualstudio.com/docs/devcontainers/containers) on VS Code and run `vp dev --host`.
+
 ## Thanks
 
 - <http://momoirocode.web.fc2.com>
