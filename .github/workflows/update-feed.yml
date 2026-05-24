@@ -1,0 +1,42 @@
+name: Update RSS Feed
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  update-feed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - uses: voidzero-dev/setup-vp@ca1c46663915d6c1042ae23bd39ab85718bfb0fa # v1.10.0
+        with:
+          node-version: '24'
+          cache: true
+
+      - run: vp install
+      - run: sudo apt-get install -y libimage-exiftool-perl
+      - run: vpr generate-feed
+
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/feed.xml scripts/episode-dates.json
+          if git diff --staged --quiet; then
+            echo "No changes – skipping commit"
+            exit 0
+          fi
+          git commit -m "chore: update RSS feed"
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -48,6 +48,14 @@ export default defineConfig({
     useTabs: false,
     vueIndentScriptAndStyle: false,
   },
+  run: {
+    tasks: {
+      'generate-feed': {
+        command: 'node scripts/generate-feed.mjs',
+        cache: false,
+      },
+    },
+  },
   lint: {
     jsPlugins: [
       { name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' },

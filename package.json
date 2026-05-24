@@ -12,6 +12,7 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
     "eslint-plugin-svelte": "^3.17.1",
+    "feed": "^5.2.1",
     "knip": "^6.14.2",
     "svelte": "^5.55.9",
     "svelte-check": "^4.4.8",
