@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
   "name": "michixa",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:24-bookworm",
   "workspaceFolder": "/workspaces/michixa",
