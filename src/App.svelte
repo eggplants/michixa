@@ -171,13 +171,22 @@
 {:else}
   <div class="viewer">
     <header class="status-bar">
-      <button
-        class="info-btn"
-        onclick={() => (showAbout = true)}
-        aria-label="このサイトについて"
-      >
-        ℹ️
-      </button>
+      <div class="header-left">
+        <button
+          class="info-btn"
+          onclick={() => (showAbout = true)}
+          aria-label="このサイトについて"
+        >
+          ℹ️
+        </button>
+        <a
+          class="rss-btn"
+          href="/michixa/feed.xml"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="RSSフィード"
+        >📡</a>
+      </div>
       <span class="status-center" aria-live="polite" aria-atomic="true">
         <span class="episode-info">{#if typeof currentEpisode.index === "number"}第{currentEpisode.index}話{/if}「{currentEpisode.title}」</span>
         <a
@@ -504,7 +513,15 @@
     height: 1rem;
   }
 
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
   .info-btn,
+  .rss-btn,
   .menu-btn {
     background: none;
     border: none;
@@ -520,10 +537,12 @@
     justify-content: center;
     transition: color 0.2s;
     flex-shrink: 0;
+    text-decoration: none;
   }
 
   .share-btn:hover,
   .info-btn:hover,
+  .rss-btn:hover,
   .menu-btn:hover {
     color: #fff;
   }
