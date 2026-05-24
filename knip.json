@@ -1,4 +1,4 @@
 {
   "entry": ["svelte.config.ts", "scripts/generate-feed.mjs"],
-  "ignoreDependencies": ["eslint-plugin-svelte"]
+  "ignoreDependencies": ["eslint-plugin-svelte", "svelte-check"]
 }

@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vp dev",
-    "build": "svelte-check && vp build",
+    "build": "vp build",
     "preview": "vp preview",
-    "check": "vp check && svelte-check"
+    "check": "vp check"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^7.1.2",

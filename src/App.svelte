@@ -261,6 +261,7 @@
 
         <figure
           class="image-container"
+          hidden={imagesLoaded}
           aria-label="{typeof currentEpisode.index === 'number'
             ? `第${currentEpisode.index}話`
             : ''}「{currentEpisode.title}」"
