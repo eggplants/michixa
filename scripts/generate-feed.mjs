@@ -68,12 +68,18 @@ if (datesUpdated) {
 
 const feed = new Feed({
   title: '非公式道草屋ばっくやーど漫画ビューア',
-  description: '道草屋ばっくやーど漫画の非公式ビューワー',
+  description: '道草屋ばっくやーど漫画の非公式ビューア。',
   id: `${SITE_URL}/`,
   link: `${SITE_URL}/`,
+  favicon: `${SITE_URL}/favicon.ico`,
+  updated: new Date(),
   language: 'ja',
   copyright: '全ての画像の権利は桃色CODE様に帰属します。',
   feedLinks: { rss2: `${SITE_URL}/feed.xml` },
+  author: {
+    name: 'eggplants',
+    link: 'https://key.egpl.dev/',
+  },
 })
 
 for (const entry of sorted) {
