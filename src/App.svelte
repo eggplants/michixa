@@ -114,6 +114,22 @@
     history.replaceState(null, "", buildShareUrl(currentEpisode.index));
   });
 
+  let imagesLoaded = $state(false);
+  let loadedImageCount = $state(0);
+
+  $effect(() => {
+    void currentEpisodeIdx;
+    loadedImageCount = 0;
+    imagesLoaded = !currentEpisode || currentEpisode.imageUrls.length === 0;
+  });
+
+  function onImageLoad(): void {
+    loadedImageCount++;
+    if (currentEpisode && loadedImageCount >= currentEpisode.imageUrls.length) {
+      imagesLoaded = true;
+    }
+  }
+
   let showAbout = $state(false);
   let showEpisodeMenu = $state(false);
 
@@ -257,8 +273,9 @@
                 : ''}{currentEpisode.title} ({i + 1}/{currentEpisode.imageUrls
                 .length}ページ)"
               class="manga-image"
-              loading="lazy"
+              loading="eager"
               draggable="false"
+              onload={onImageLoad}
             />
           {/each}
         </figure>
@@ -405,6 +422,7 @@
   }
 
   .image-area {
+    position: relative;
     width: 100%;
     user-select: none;
     min-height: calc(100vh - 5.5rem);
@@ -669,6 +687,20 @@
     font-size: 1.2rem;
     font-family: system-ui, sans-serif;
     background: #1a1a1a;
+  }
+
+  .image-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+    font-size: 1.2rem;
+    font-family: system-ui, sans-serif;
+    background: #1a1a1a;
+    min-height: calc(100vh - 5.5rem);
   }
 
   .overlay.error {
