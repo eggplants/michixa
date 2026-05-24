@@ -9,6 +9,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'pwa-192.png', 'pwa-512.png'],
+      workbox: {
+        navigateFallbackDenylist: [/\/feed\.xml$/],
+      },
       manifest: {
         name: '非公式道草屋ばっくやーど漫画ビューア',
         short_name: 'michixa',
