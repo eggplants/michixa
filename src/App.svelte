@@ -144,7 +144,7 @@
     if (e.key === "ArrowRight") next();
   }
 
-  const SWIPE_THRESHOLD = 50;
+  const SWIPE_THRESHOLD = 200;
   let dragStartX = $state<number | null>(null);
 
   function onDragStart(x: number): void {
