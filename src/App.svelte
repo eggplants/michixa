@@ -418,7 +418,7 @@
   .viewer {
     min-height: 100vh;
     background: #1a1a1a;
-    padding: 3rem 88px 2.5rem;
+    padding: 3rem 88px 0;
   }
 
   .image-area {
@@ -460,7 +460,7 @@
 
   @media (max-width: 768px) {
     .viewer {
-      padding: 3rem 0 2.5rem;
+      padding: 3rem 0 0;
     }
 
     .nav-side {
@@ -687,20 +687,6 @@
     font-size: 1.2rem;
     font-family: system-ui, sans-serif;
     background: #1a1a1a;
-  }
-
-  .image-loading {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ccc;
-    font-size: 1.2rem;
-    font-family: system-ui, sans-serif;
-    background: #1a1a1a;
-    min-height: calc(100vh - 5.5rem);
   }
 
   .overlay.error {
