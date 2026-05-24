@@ -75,7 +75,7 @@ const feed = new Feed({
   updated: new Date(),
   language: 'ja',
   copyright: '全ての画像の権利は桃色CODE様に帰属します。',
-  feedLinks: { rss2: `${SITE_URL}/feed.xml` },
+  feedLinks: { rss: `${SITE_URL}/feed.xml` },
   author: {
     name: 'eggplants',
     link: 'https://key.egpl.dev/',
