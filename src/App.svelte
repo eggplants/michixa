@@ -1,39 +1,16 @@
 <script lang="ts">
   import type { EpisodeEntry, Episode } from "./types.ts";
+  import {
+    buildShareUrl,
+    buildXIntentUrl,
+    loadIndexFromCookie,
+    resolveImageUrl,
+    saveIndexToCookie,
+    sortEpisodeEntries,
+  } from "./utils.ts";
 
   const DATA_URL =
     "https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4komaData.json";
-  const WEBP_BASE =
-    "https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/";
-  const COOKIE_NAME = "michixa_page";
-  const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
-
-  function loadIndexFromCookie(): number {
-    const match = document.cookie.match(/(?:^|;\s*)michixa_page=(\d+)/);
-    return match ? parseInt(match[1], 10) : 0;
-  }
-
-  function saveIndexToCookie(index: number): void {
-    document.cookie = `${COOKIE_NAME}=${index}; max-age=${COOKIE_MAX_AGE}; path=/`;
-  }
-
-  function resolveImageUrl(rel: string): string {
-    const name = rel.replace(/^\.\//, "").replace(/\.\w+$/, "");
-    return `${WEBP_BASE}${name}.webp`;
-  }
-
-  function buildShareUrl(index: number | string): string {
-    const url = new URL(window.location.href);
-    url.search = `i=${index}`;
-    return url.toString();
-  }
-
-  function buildXIntentUrl(episode: Episode): string {
-    const prefix =
-      typeof episode.index === "number" ? `第${episode.index}話` : "";
-    const text = prefix ? `${prefix}「${episode.title}」` : episode.title;
-    return `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(buildShareUrl(episode.index))}`;
-  }
 
   let loadState = $state<"loading" | "error" | "ready">("loading");
   let episodes = $state<Episode[]>([]);
@@ -51,15 +28,7 @@
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data: EpisodeEntry[] = (await resp.json()) as EpisodeEntry[];
 
-      const sorted = [...data].sort((a, b) => {
-        const ai =
-          typeof a.Index === "number" ? a.Index : Number.NEGATIVE_INFINITY;
-        const bi =
-          typeof b.Index === "number" ? b.Index : Number.NEGATIVE_INFINITY;
-        return ai - bi;
-      });
-
-      const grouped: Episode[] = sorted.map((entry) => ({
+      const grouped: Episode[] = sortEpisodeEntries(data).map((entry) => ({
         index: entry.Index,
         title: entry.Title,
         imageUrls: entry.ImagesUrl.map(resolveImageUrl),
@@ -71,7 +40,10 @@
         const found = grouped.findIndex((ep) => String(ep.index) === urlIndex);
         currentEpisodeIdx = found >= 0 ? found : 0;
       } else {
-        currentEpisodeIdx = Math.min(loadIndexFromCookie(), grouped.length - 1);
+        currentEpisodeIdx = Math.min(
+          loadIndexFromCookie(document.cookie),
+          grouped.length - 1,
+        );
       }
       loadState = "ready";
     } catch (e) {
@@ -84,7 +56,7 @@
 
   const currentEpisode = $derived(episodes[currentEpisodeIdx]);
   const xIntentUrl = $derived(
-    currentEpisode ? buildXIntentUrl(currentEpisode) : "",
+    currentEpisode ? buildXIntentUrl(currentEpisode, window.location.href) : "",
   );
   const prevEpisode = $derived(
     currentEpisodeIdx > 0 ? episodes[currentEpisodeIdx - 1] : null,
@@ -111,7 +83,7 @@
 
   $effect(() => {
     if (loadState !== "ready" || !currentEpisode) return;
-    history.replaceState(null, "", buildShareUrl(currentEpisode.index));
+    history.replaceState(null, "", buildShareUrl(currentEpisode.index, window.location.href));
   });
 
   let imagesLoaded = $state(false);

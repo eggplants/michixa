@@ -4,6 +4,10 @@ import { defineConfig } from 'vite-plus'
 
 export default defineConfig({
   base: '/michixa',
+  test: {
+    environment: 'happy-dom',
+    include: ['src/**/*.test.ts'],
+  },
   plugins: [
     svelte(),
     VitePWA({

@@ -25,6 +25,9 @@ run = "shfmt -s"
 [tasks.svelte-check]
 run = "pnpm svelte-check"
 
+[tasks.knip]
+run = "pnpm knip"
+
 [tasks.vp-check-fix]
 run = "vp check --fix"
 
@@ -38,7 +41,7 @@ run = "dockerfile-pin run --write --update --min-age 7"
 run = "pinact run -u -min-age 7"
 
 [tasks.pre-commit]
-depends = ["ghalint", "svelte-check", "vp-check-fix"]
+depends = ["ghalint", "svelte-check", "vp-check-fix", "knip"]
 
 [tasks.pre-push]
 depends = []
