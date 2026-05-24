@@ -2,6 +2,9 @@
 # https://github.com/voidzero-dev/vite-plus/issues/943
 vite-plus = "https://github.com/markmals/mise-vite-plus"
 
+[settings.github]
+use_git_credentials = true
+
 [tools]
 "aqua:azu/dockerfile-pin" = "latest"
 claude = "latest"

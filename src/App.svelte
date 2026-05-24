@@ -167,7 +167,9 @@
 {#if loadState === "loading"}
   <div class="overlay" role="status" aria-live="polite">読み込み中...</div>
 {:else if loadState === "error"}
-  <div class="overlay error" role="alert">データの読み込みに失敗しました: {errorMessage}</div>
+  <div class="overlay error" role="alert">
+    データの読み込みに失敗しました: {errorMessage}
+  </div>
 {:else}
   <div class="viewer">
     <header class="status-bar">
@@ -184,11 +186,13 @@
           href="/michixa/feed.xml"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="RSSフィード"
-        >📡</a>
+          aria-label="RSSフィード">📡</a
+        >
       </div>
       <span class="status-center" aria-live="polite" aria-atomic="true">
-        <span class="episode-info">{#if typeof currentEpisode.index === "number"}第{currentEpisode.index}話{/if}「{currentEpisode.title}」</span>
+        <span class="episode-info">
+          {#if typeof currentEpisode.index === "number"}第{currentEpisode.index}話{/if}「{currentEpisode.title}」
+        </span>
         <a
           class="share-btn"
           href={xIntentUrl}
@@ -196,7 +200,12 @@
           rel="noopener noreferrer"
           aria-label="Xで共有"
         >
-          <img src="/michixa/x-icon.svg" alt="" aria-hidden="true" class="share-icon" />
+          <img
+            src="/michixa/x-icon.svg"
+            alt="Xで共有"
+            aria-hidden="true"
+            class="share-icon"
+          />
         </a>
       </span>
       <button
@@ -217,39 +226,59 @@
         onmousedown={handleMouseDown}
         onmouseup={handleMouseUp}
       >
-      <nav class="nav-side nav-side-prev" aria-label="前の話へ">
-        {#if prevEpisode}
-          <button class="nav-btn" onclick={prev} aria-label="前の話：{typeof prevEpisode.index === 'number' ? `第${prevEpisode.index}話` : ''}「{prevEpisode.title}」">
-            <span class="nav-arrow" aria-hidden="true">←</span>
-            <span class="nav-info" aria-hidden="true">
-              {#if typeof prevEpisode.index === "number"}第{prevEpisode.index}話<br />{/if}{prevEpisode.title}
-            </span>
-          </button>
-        {/if}
-      </nav>
+        <nav class="nav-side nav-side-prev" aria-label="前の話へ">
+          {#if prevEpisode}
+            <button
+              class="nav-btn"
+              onclick={prev}
+              aria-label="前の話：{typeof prevEpisode.index === 'number'
+                ? `第${prevEpisode.index}話`
+                : ''}「{prevEpisode.title}」"
+            >
+              <span class="nav-arrow" aria-hidden="true">←</span>
+              <span class="nav-info" aria-hidden="true">
+                {#if typeof prevEpisode.index === "number"}第{prevEpisode.index}話<br />{/if}{prevEpisode.title}
+              </span>
+            </button>
+          {/if}
+        </nav>
 
-      <figure class="image-container" aria-label="{typeof currentEpisode.index === 'number' ? `第${currentEpisode.index}話` : ''}「{currentEpisode.title}」">
-        {#each currentEpisode.imageUrls as url, i}
-          <img
-            src={url}
-            alt="{typeof currentEpisode.index === 'number' ? `第${currentEpisode.index}話` : ''}{currentEpisode.title} ({i + 1}/{currentEpisode.imageUrls.length}ページ)"
-            class="manga-image"
-            loading="lazy"
-            draggable="false"
-          />
-        {/each}
-      </figure>
+        <figure
+          class="image-container"
+          aria-label="{typeof currentEpisode.index === 'number'
+            ? `第${currentEpisode.index}話`
+            : ''}「{currentEpisode.title}」"
+        >
+          {#each currentEpisode.imageUrls as url, i}
+            <img
+              src={url}
+              alt="{typeof currentEpisode.index === 'number'
+                ? `第${currentEpisode.index}話`
+                : ''}{currentEpisode.title} ({i + 1}/{currentEpisode.imageUrls
+                .length}ページ)"
+              class="manga-image"
+              loading="lazy"
+              draggable="false"
+            />
+          {/each}
+        </figure>
 
-      <nav class="nav-side nav-side-next" aria-label="次の話へ">
-        {#if nextEpisode}
-          <button class="nav-btn" onclick={next} aria-label="次の話：{typeof nextEpisode.index === 'number' ? `第${nextEpisode.index}話` : ''}「{nextEpisode.title}」">
-            <span class="nav-arrow" aria-hidden="true">→</span>
-            <span class="nav-info" aria-hidden="true">
-              {#if typeof nextEpisode.index === "number"}第{nextEpisode.index}話<br />{/if}{nextEpisode.title}
-            </span>
-          </button>
-        {/if}
-      </nav>
+        <nav class="nav-side nav-side-next" aria-label="次の話へ">
+          {#if nextEpisode}
+            <button
+              class="nav-btn"
+              onclick={next}
+              aria-label="次の話：{typeof nextEpisode.index === 'number'
+                ? `第${nextEpisode.index}話`
+                : ''}「{nextEpisode.title}」"
+            >
+              <span class="nav-arrow" aria-hidden="true">→</span>
+              <span class="nav-info" aria-hidden="true">
+                {#if typeof nextEpisode.index === "number"}第{nextEpisode.index}話<br />{/if}{nextEpisode.title}
+              </span>
+            </button>
+          {/if}
+        </nav>
       </div>
     </main>
   </div>
@@ -284,11 +313,15 @@
       >
         {#each episodes as ep, i}
           <option value={i} selected={i === currentEpisodeIdx}>
-            {typeof ep.index === "number" ? `第${ep.index}話` : ""}「{ep.title}」
+            {typeof ep.index === "number"
+              ? `第${ep.index}話`
+              : ""}「{ep.title}」
           </option>
         {/each}
       </select>
-      <button class="modal-close" onclick={() => (showEpisodeMenu = false)}>閉じる</button>
+      <button class="modal-close" onclick={() => (showEpisodeMenu = false)}
+        >閉じる
+      </button>
     </div>
   </div>
 {/if}
@@ -314,24 +347,43 @@
       <p>
         道草屋ばっくやーど漫画の非公式ビューワーです。<br />全ての画像の権利は桃色CODE様に帰属します。
       </p>
+      <u>桃色CODE様</u>
+      <ul>
+        <li>
+          漫画:
+          <a
+            href="http://momoirocode.web.fc2.com"
+            target="_blank"
+            rel="noopener noreferrer">momoirocode.web.fc2.com</a
+          >
+        </li>
+        <li>
+          Booth:
+          <a
+            href="https://momotori.booth.pm"
+            target="_blank"
+            rel="noopener noreferrer">momotori.booth.pm</a
+          >
+        </li>
+        <li>
+          DLsite:
+          <a
+            href="https://www.dlsite.com/home/circle/profile/=/maker_id/RG24350.html"
+            target="_blank"
+            rel="noopener noreferrer">桃色CODE / RG24350</a
+          >
+        </li>
+      </ul>
+      <u>漫画データ</u>
       <p>
-        桃色CODE様:
-        <a
-          href="http://momoirocode.web.fc2.com"
-          target="_blank"
-          rel="noopener noreferrer">momoirocode.web.fc2.com</a
-        >
-      </p>
-      <p>
-        漫画データ:
         <a
           href="https://github.com/iranika/mo-code-4koma"
           target="_blank"
           rel="noopener noreferrer">iranika/mo-code-4koma</a
         >
       </p>
+      <u>リポジトリ</u>
       <p>
-        リポジトリ:
         <a
           href="https://github.com/eggplants/michixa"
           target="_blank"
@@ -450,11 +502,7 @@
     padding-inline: 1rem;
     padding-block: 0.5rem;
     font-size: 0.95rem;
-    font-family:
-      "Hiragino Kaku Gothic Pro",
-      "Noto Sans JP",
-      system-ui,
-      sans-serif;
+    font-family: "Hiragino Kaku Gothic Pro", "Noto Sans JP", system-ui, sans-serif;
     z-index: 10;
   }
 
@@ -483,11 +531,7 @@
     border-radius: 4px;
     color: #e0e0e0;
     font-size: 0.9rem;
-    font-family:
-      "Hiragino Kaku Gothic Pro",
-      "Noto Sans JP",
-      system-ui,
-      sans-serif;
+    font-family: "Hiragino Kaku Gothic Pro", "Noto Sans JP", system-ui, sans-serif;
     cursor: pointer;
     padding: 0.5rem;
   }
@@ -564,11 +608,7 @@
     padding: 2rem;
     max-width: 420px;
     width: 90%;
-    font-family:
-      "Hiragino Kaku Gothic Pro",
-      "Noto Sans JP",
-      system-ui,
-      sans-serif;
+    font-family: "Hiragino Kaku Gothic Pro", "Noto Sans JP", system-ui, sans-serif;
   }
 
   .modal h2 {
@@ -578,10 +618,19 @@
     text-align: center;
   }
 
-  .modal p {
-    margin: 0.5rem 0;
+  .modal p,
+  .modal ul {
+    margin: 0.25rem 0;
     font-size: 0.9rem;
     line-height: 1.7;
+  }
+
+  .modal ul {
+    padding-inline-start: 15px;
+  }
+
+  .modal ul li {
+    list-style-type: "- ";
   }
 
   .modal a {
@@ -625,5 +674,4 @@
   .overlay.error {
     color: #f87171;
   }
-
 </style>
