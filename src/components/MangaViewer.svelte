@@ -118,7 +118,7 @@
       aria-label="Xで共有"
     >
       <img
-        src="{import.meta.env.BASE_URL}x-icon.svg"
+        src="{import.meta.env.BASE_URL}/x-icon.svg"
         alt="Xで共有"
         aria-hidden="true"
         class="share-icon"
