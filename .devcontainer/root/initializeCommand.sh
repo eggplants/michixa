@@ -1,1 +1,0 @@
-./initializeCommand.sh
