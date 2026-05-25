@@ -119,15 +119,27 @@
 
   const SWIPE_THRESHOLD = 200;
   let dragStartX = $state<number | null>(null);
+  let dragCurrentDx = $state(0);
+
+  const swipeProgress = $derived(
+    dragStartX !== null ? Math.min(Math.abs(dragCurrentDx) / SWIPE_THRESHOLD, 1) : 0,
+  );
 
   function onDragStart(x: number): void {
     dragStartX = x;
+    dragCurrentDx = 0;
+  }
+
+  function onDragMove(x: number): void {
+    if (dragStartX === null) return;
+    dragCurrentDx = x - dragStartX;
   }
 
   function onDragEnd(x: number): void {
     if (dragStartX === null) return;
     const dx = x - dragStartX;
     dragStartX = null;
+    dragCurrentDx = 0;
     if (Math.abs(dx) < SWIPE_THRESHOLD) return;
     if (dx < 0) next();
     else prev();
@@ -137,6 +149,10 @@
     onDragStart(e.touches[0].clientX);
   }
 
+  function handleTouchMove(e: TouchEvent): void {
+    onDragMove(e.touches[0].clientX);
+  }
+
   function handleTouchEnd(e: TouchEvent): void {
     onDragEnd(e.changedTouches[0].clientX);
   }
@@ -144,6 +160,10 @@
   function handleMouseDown(e: MouseEvent): void {
     e.preventDefault();
     onDragStart(e.clientX);
+  }
+
+  function handleMouseMove(e: MouseEvent): void {
+    onDragMove(e.clientX);
   }
 
   function handleMouseUp(e: MouseEvent): void {
@@ -172,11 +192,28 @@
         class="image-area"
         role="presentation"
         ontouchstart={handleTouchStart}
+        ontouchmove={handleTouchMove}
         ontouchend={handleTouchEnd}
         onmousedown={handleMouseDown}
+        onmousemove={handleMouseMove}
         onmouseup={handleMouseUp}
       >
         <NavButton direction="prev" episode={prevEpisode} onclick={prev} />
+
+        <div
+          class="swipe-hint"
+          style:opacity={swipeProgress}
+          style:transform="translate(-50%, -50%) scale({0.5 + 0.5 * swipeProgress})"
+          aria-hidden="true"
+        >
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            {#if dragCurrentDx >= 0}
+              <polyline points="9 18 15 12 9 6" />
+            {:else}
+              <polyline points="15 18 9 12 15 6" />
+            {/if}
+          </svg>
+        </div>
 
         <figure
           class="image-container"
@@ -335,6 +372,32 @@
       padding-bottom: 7rem;
       padding-inline: 0;
     }
+  }
+
+  .swipe-hint {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 5rem;
+    height: 5rem;
+    background: rgba(240, 145, 153, 0.85);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: opacity 0.15s, transform 0.15s;
+    z-index: 20;
+  }
+
+  .swipe-hint svg {
+    width: 2.5rem;
+    height: 2.5rem;
+    stroke: #fff;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
   }
 
   .share-btn {

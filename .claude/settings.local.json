@@ -1,8 +1,5 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(pnpm list *)",
-      "Bash(npx svelte-check *)"
-    ]
+    "allow": ["Bash(pnpm list *)", "Bash(npx svelte-check *)"]
   }
 }
