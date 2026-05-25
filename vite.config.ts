@@ -6,7 +6,7 @@ export default defineConfig({
   base: '/michixa',
   test: {
     environment: 'happy-dom',
-    include: ['src/**/*.test.ts'],
+    includeSource: ['src/**/*.ts'],
   },
   plugins: [
     svelte(),
