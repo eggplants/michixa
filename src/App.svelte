@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { EpisodeEntry, Episode } from "./types.ts";
-  import { Modal, NavButton, StatusBar } from "./components";
+  import { MangaViewer, Modal, StatusBar } from "./components";
   import {
     buildShareUrl,
     buildXIntentUrl,
@@ -87,22 +87,6 @@
     history.replaceState(null, "", buildShareUrl(currentEpisode.index, window.location.href));
   });
 
-  let imagesLoaded = $state(false);
-  let loadedImageCount = $state(0);
-
-  $effect(() => {
-    void currentEpisodeIdx;
-    loadedImageCount = 0;
-    imagesLoaded = !currentEpisode || currentEpisode.imageUrls.length === 0;
-  });
-
-  function onImageLoad(): void {
-    loadedImageCount++;
-    if (currentEpisode && loadedImageCount >= currentEpisode.imageUrls.length) {
-      imagesLoaded = true;
-    }
-  }
-
   let showAbout = $state(false);
   let showEpisodeMenu = $state(false);
 
@@ -115,59 +99,6 @@
     if (showAbout || showEpisodeMenu) return;
     if (e.key === "ArrowLeft") prev();
     if (e.key === "ArrowRight") next();
-  }
-
-  const SWIPE_THRESHOLD = 200;
-  let dragStartX = $state<number | null>(null);
-  let dragCurrentDx = $state(0);
-
-  const swipeProgress = $derived(
-    dragStartX !== null ? Math.min(Math.abs(dragCurrentDx) / SWIPE_THRESHOLD, 1) : 0,
-  );
-
-  function onDragStart(x: number): void {
-    dragStartX = x;
-    dragCurrentDx = 0;
-  }
-
-  function onDragMove(x: number): void {
-    if (dragStartX === null) return;
-    dragCurrentDx = x - dragStartX;
-  }
-
-  function onDragEnd(x: number): void {
-    if (dragStartX === null) return;
-    const dx = x - dragStartX;
-    dragStartX = null;
-    dragCurrentDx = 0;
-    if (Math.abs(dx) < SWIPE_THRESHOLD) return;
-    if (dx < 0) next();
-    else prev();
-  }
-
-  function handleTouchStart(e: TouchEvent): void {
-    onDragStart(e.touches[0].clientX);
-  }
-
-  function handleTouchMove(e: TouchEvent): void {
-    onDragMove(e.touches[0].clientX);
-  }
-
-  function handleTouchEnd(e: TouchEvent): void {
-    onDragEnd(e.changedTouches[0].clientX);
-  }
-
-  function handleMouseDown(e: MouseEvent): void {
-    e.preventDefault();
-    onDragStart(e.clientX);
-  }
-
-  function handleMouseMove(e: MouseEvent): void {
-    onDragMove(e.clientX);
-  }
-
-  function handleMouseUp(e: MouseEvent): void {
-    onDragEnd(e.clientX);
   }
 </script>
 
@@ -188,74 +119,14 @@
     />
 
     <main aria-label="漫画ビューワー">
-      <div
-        class="image-area"
-        role="presentation"
-        ontouchstart={handleTouchStart}
-        ontouchmove={handleTouchMove}
-        ontouchend={handleTouchEnd}
-        onmousedown={handleMouseDown}
-        onmousemove={handleMouseMove}
-        onmouseup={handleMouseUp}
-      >
-        <NavButton direction="prev" episode={prevEpisode} onclick={prev} />
-
-        <div
-          class="swipe-hint"
-          style:opacity={swipeProgress}
-          style:transform="translate(-50%, -50%) scale({0.5 + 0.5 * swipeProgress})"
-          aria-hidden="true"
-        >
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            {#if dragCurrentDx >= 0}
-              <polyline points="9 18 15 12 9 6" />
-            {:else}
-              <polyline points="15 18 9 12 15 6" />
-            {/if}
-          </svg>
-        </div>
-
-        <figure
-          class="image-container"
-          hidden={imagesLoaded}
-          aria-label="{typeof currentEpisode.index === 'number'
-            ? `第${currentEpisode.index}話`
-            : ''}「{currentEpisode.title}」"
-        >
-          {#each currentEpisode.imageUrls as url, i}
-            <img
-              src={url}
-              alt="{typeof currentEpisode.index === 'number'
-                ? `第${currentEpisode.index}話`
-                : ''}{currentEpisode.title} ({i + 1}/{currentEpisode.imageUrls
-                .length}ページ)"
-              class="manga-image"
-              loading="eager"
-              draggable="false"
-              onload={onImageLoad}
-            />
-          {/each}
-        </figure>
-
-        <NavButton direction="next" episode={nextEpisode} onclick={next} />
-
-        <nav class="share-center" aria-label="共有">
-          <a
-            class="share-btn"
-            href={xIntentUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Xで共有"
-          >
-            <img
-              src="/michixa/x-icon.svg"
-              alt="Xで共有"
-              aria-hidden="true"
-              class="share-icon"
-            />
-          </a>
-        </nav>
-      </div>
+      <MangaViewer
+        {currentEpisode}
+        {prevEpisode}
+        {nextEpisode}
+        {xIntentUrl}
+        onprev={prev}
+        onnext={next}
+      />
     </main>
   </div>
 {/if}
@@ -345,73 +216,12 @@
     padding-inline: 88px;
   }
 
-  .image-area {
-    position: relative;
-    width: 100%;
-    user-select: none;
-    min-height: calc(100vh - 5.5rem);
-  }
-
-  .image-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-  }
-
-  .manga-image {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
   @media (max-width: 768px) {
     .viewer {
       padding-top: 3rem;
       padding-bottom: 7rem;
       padding-inline: 0;
     }
-  }
-
-  .swipe-hint {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 5rem;
-    height: 5rem;
-    background: rgba(240, 145, 153, 0.85);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    transition: opacity 0.15s, transform 0.15s;
-    z-index: 20;
-  }
-
-  .swipe-hint svg {
-    width: 2.5rem;
-    height: 2.5rem;
-    stroke: #fff;
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    fill: none;
-  }
-
-  .share-btn {
-    background: rgba(240, 145, 153, 0.5);
-    border: none;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: background 0.2s;
-    width: 3rem;
-    height: 3rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
   }
 
   .episode-select {
@@ -429,23 +239,6 @@
   .episode-select option {
     background: #fde8ea;
     color: #6b1a24;
-  }
-
-  .share-center {
-    position: fixed;
-    bottom: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-  }
-
-  .share-btn:hover {
-    background: rgba(240, 145, 153, 0.9);
-  }
-
-  .share-icon {
-    width: 1.3rem;
-    height: 1.3rem;
   }
 
   .overlay {

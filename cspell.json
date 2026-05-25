@@ -1,6 +1,7 @@
 {
   "language": "en_US",
   "words": [
+    "beforeinstallprompt",
     "cooldown",
     "dbaeumer",
     "exiftool",
@@ -16,6 +17,8 @@
     "momoirocode",
     "momotori",
     "oderwat",
+    "onnext",
+    "onprev",
     "oxfmt",
     "oxlint",
     "pinact",

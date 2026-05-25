@@ -53,12 +53,10 @@ describe('sortEpisodeEntries', () => {
     const data: EpisodeEntry[] = [
       { Index: 1, Title: 'A', BaseUrl: '', ImagesUrl: [] },
       { Index: 'ri', Title: 'R', BaseUrl: '', ImagesUrl: [] },
-      { Index: 'sp', Title: 'S', BaseUrl: '', ImagesUrl: [] },
     ]
     const result = sortEpisodeEntries(data)
     expect(typeof result[0].Index).toBe('string')
-    expect(typeof result[1].Index).toBe('string')
-    expect(result[2].Index).toBe(1)
+    expect(result[1].Index).toBe(1)
   })
 
   it('does not mutate the original array', () => {

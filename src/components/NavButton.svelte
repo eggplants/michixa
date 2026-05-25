@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Episode } from "../types.ts";
+  import ChevronSvg from "./ChevronSvg.svelte";
 
   interface Props {
     direction: "prev" | "next";
@@ -25,7 +26,7 @@
       onclick={(e) => { onclick(); e.currentTarget.blur(); }}
       aria-label="{direction === 'prev' ? '前' : '次'}の話：{episodeString}「{episode.title}」"
     >
-      <span class="nav-arrow" aria-hidden="true">{direction === "prev" ? "<" : ">"}</span>
+      <ChevronSvg {direction} />
     </button>
   {/if}
 </nav>
@@ -72,10 +73,4 @@
     background: rgba(240, 145, 153, 0.9);
   }
 
-  .nav-arrow {
-    font-size: 1.5rem;
-    font-weight: bold;
-    line-height: 1;
-    color: white;
-  }
 </style>
