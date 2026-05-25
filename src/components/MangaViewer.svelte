@@ -78,11 +78,12 @@
   onmouseup={handleMouseUp}
 >
   <NavButton direction="prev" episode={prevEpisode} onclick={onprev} />
-
-  <SwipeHint
-    direction={dragCurrentDx >= 0 ? "next" : "prev"}
-    progress={swipeProgress}
-  />
+  {#if dragCurrentDx !== 0}
+    <SwipeHint
+      direction={dragCurrentDx >= 0 ? "prev" : "next"}
+      progress={swipeProgress}
+    />
+  {/if}
 
   <figure
     class="image-container"
