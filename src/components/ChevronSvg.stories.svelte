@@ -28,7 +28,7 @@
   }}
 >
   {#snippet children(args)}
-    <div style="background:#333;display:inline-flex;padding:1rem;border-radius:8px">
+    <div style="display:inline-flex;padding:1rem;border-radius:8px;">
       <ChevronSvg direction={args.direction} size={args.size} />
     </div>
   {/snippet}
@@ -44,7 +44,7 @@
   }}
 >
   {#snippet children(args)}
-    <div style="background:#333;display:inline-flex;padding:1rem;border-radius:8px">
+    <div style="display:inline-flex;padding:1rem;border-radius:8px">
       <ChevronSvg direction={args.direction} size={args.size} />
     </div>
   {/snippet}
@@ -61,7 +61,7 @@
   }}
 >
   {#snippet children(args)}
-    <div style="background:#333;display:inline-flex;padding:1rem;border-radius:8px">
+    <div style="display:inline-flex;padding:1rem;border-radius:8px">
       <ChevronSvg direction={args.direction} size={args.size} />
     </div>
   {/snippet}

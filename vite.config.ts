@@ -1,9 +1,9 @@
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath } from 'node:url'
+import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import { VitePWA } from 'vite-plugin-pwa'
 import { defineConfig } from 'vite-plus'
-import { playwright } from '@vitest/browser-playwright'
-import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
+import { playwright } from 'vite-plus/test/browser-playwright'
 
 export default defineConfig({
   base: '/michixa',
@@ -33,10 +33,10 @@ export default defineConfig({
             provider: playwright({}),
             screenshotFailures: false,
             instances: [{ browser: 'chromium' }],
-          }
-        }
-      }
-    ]
+          },
+        },
+      },
+    ],
   },
   plugins: [
     svelte(),

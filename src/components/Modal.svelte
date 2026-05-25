@@ -8,7 +8,7 @@
     children: Snippet;
   }
 
-  const { title, titleId, onclose, children }: Props = $props();
+  const { title = '', titleId = '', onclose = () => {}, children }: Props = $props();
 </script>
 
 <div

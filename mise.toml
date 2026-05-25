@@ -23,10 +23,10 @@ run = "ghalint run"
 run = "shfmt -s"
 
 [tasks.svelte-check]
-run = "pnpm svelte-check"
+run = "vpx svelte-check"
 
 [tasks.knip]
-run = "pnpm knip"
+run = "vpx knip"
 
 [tasks.vp-check-fix]
 run = "vp check --fix"
