@@ -1,16 +1,47 @@
+import { fileURLToPath } from 'node:url';
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import { VitePWA } from 'vite-plugin-pwa'
 import { defineConfig } from 'vite-plus'
+import { playwright } from '@vitest/browser-playwright'
+import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 
 export default defineConfig({
   base: '/michixa',
   test: {
     environment: 'happy-dom',
-    includeSource: ['src/**/*.ts'],
+    projects: [
+      {
+        test: {
+          name: 'unit',
+          environment: 'happy-dom',
+          includeSource: ['src/**/*.ts'],
+        },
+      },
+      {
+        extends: true,
+        plugins: [
+          storybookTest({
+            configDir: fileURLToPath(new URL('./.storybook', import.meta.url)),
+            storybookScript: 'pnpm run sb:ci',
+          }),
+        ],
+        test: {
+          name: 'storybook',
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright({}),
+            screenshotFailures: false,
+            instances: [{ browser: 'chromium' }],
+          }
+        }
+      }
+    ]
   },
   plugins: [
     svelte(),
     VitePWA({
+      disable: process.env.SB === '1',
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'pwa-192.png', 'pwa-512.png'],
       workbox: {

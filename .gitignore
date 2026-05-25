@@ -27,3 +27,6 @@ dist-ssr
 
 # AI agent worktrees
 .claude/worktrees/
+
+*storybook.log
+storybook-static

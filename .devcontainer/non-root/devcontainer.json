@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
   "name": "michixa",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:24-bookworm",
+  "image": "mcr.microsoft.com/playwright:v1.60.0-noble@sha256:9bd26ad900bb5e0f4dee75839e957a89ae89c2b7ab1e76050e559790e946b948",
   "workspaceFolder": "/workspaces/michixa",
   "initializeCommand": ".devcontainer/initializeCommand.sh",
   "postCreateCommand": ".devcontainer/postCreateCommand.sh",

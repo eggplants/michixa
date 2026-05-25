@@ -20,6 +20,7 @@
 
   $effect(() => {
     void currentEpisode;
+    if (!currentEpisode) return;
     loadedImageCount = 0;
     imagesLoaded = currentEpisode.imageUrls.length === 0;
   });
@@ -87,7 +88,7 @@
 
   <figure
     class="image-container"
-    hidden={imagesLoaded}
+    hidden={!imagesLoaded}
     aria-label="{typeof currentEpisode.index === 'number'
       ? `第${currentEpisode.index}話`
       : ''}「{currentEpisode.title}」"

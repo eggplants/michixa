@@ -1,5 +1,5 @@
-import type { Episode, EpisodeEntry } from './types.ts'
 import { beforeEach, describe, expect, it } from 'vite-plus/test'
+import type { Episode, EpisodeEntry } from './types.ts'
 
 const WEBP_BASE =
   'https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/'
