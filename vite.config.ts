@@ -9,6 +9,10 @@ export default defineConfig({
   base: '/michixa',
   test: {
     environment: 'happy-dom',
+    coverage: {
+      provider: 'v8',
+      reporter: process.env.CI ? ['cobertura', 'text', 'json-summary', 'json'] : ['html'],
+    },
     projects: [
       {
         test: {
