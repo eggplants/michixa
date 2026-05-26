@@ -16,6 +16,9 @@ shfmt = "latest"
 usage = "latest"
 vite-plus = "latest"
 
+[tasks.dev]
+run = "vp dev --host"
+
 [tasks.ghalint]
 run = "ghalint run"
 

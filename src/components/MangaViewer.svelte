@@ -152,9 +152,14 @@
   .share-center {
     position: fixed;
     bottom: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
+    right: 8px;
     z-index: 10;
+  }
+
+  @media (max-width: 768px) {
+    .share-center {
+      bottom: calc(1rem + 3rem + 0.5rem);
+    }
   }
 
   .share-btn {

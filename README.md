@@ -10,7 +10,7 @@
 
 ## Development
 
-Launch [Dev Container](https://code.visualstudio.com/docs/devcontainers/containers) on VS Code and run `vp dev --host`.
+Launch [Dev Container](https://code.visualstudio.com/docs/devcontainers/containers) on VS Code and run `mise run dev`.
 
 ## Acknowledgments
 
