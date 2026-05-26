@@ -7,6 +7,8 @@ catalog:
 overrides:
   vite: "catalog:"
   vitest: "catalog:"
+patchedDependencies:
+  '@storybook/addon-svelte-csf@5.1.2': patches/@storybook__addon-svelte-csf@5.1.2.patch
 peerDependencyRules:
   allowAny:
     - vite
