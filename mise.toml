@@ -26,13 +26,13 @@ run = "ghalint run"
 run = "shfmt -s"
 
 [tasks.svelte-check]
-run = "vpx svelte-check"
+run = "vpx svelte-check --tsgo"
 
 [tasks.knip]
 run = "vpx knip"
 
 [tasks.vp-check-fix]
-run = "vp check --fix"
+run = "vpr check --fix"
 
 [tasks.pin]
 depends = ["dockerfile-pin", "pinact"]

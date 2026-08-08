@@ -1,31 +1,29 @@
 <script lang="ts">
   interface BeforeInstallPromptEvent extends Event {
-    prompt(): Promise<void>;
-    userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+    prompt(): Promise<void>
+    userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
   }
 
-  let installPromptEvent = $state<BeforeInstallPromptEvent | null>(null);
+  let installPromptEvent = $state<BeforeInstallPromptEvent | null>(null)
 
   $effect(() => {
     const handler = (e: Event) => {
-      e.preventDefault();
-      installPromptEvent = e as BeforeInstallPromptEvent;
-    };
-    window.addEventListener("beforeinstallprompt", handler);
-    return () => window.removeEventListener("beforeinstallprompt", handler);
-  });
+      e.preventDefault()
+      installPromptEvent = e as BeforeInstallPromptEvent
+    }
+    window.addEventListener('beforeinstallprompt', handler)
+    return () => window.removeEventListener('beforeinstallprompt', handler)
+  })
 
   async function installPwa(): Promise<void> {
-    if (!installPromptEvent) return;
-    await installPromptEvent.prompt();
-    installPromptEvent = null;
+    if (!installPromptEvent) return
+    await installPromptEvent.prompt()
+    installPromptEvent = null
   }
 </script>
 
 {#if installPromptEvent}
-  <button class="install-btn" onclick={installPwa} aria-label="インストール">
-    📥
-  </button>
+  <button class="install-btn" onclick={installPwa} aria-label="インストール"> 📥 </button>
 {/if}
 
 <style>

@@ -1,39 +1,34 @@
 <script lang="ts">
-  import type { Episode } from "../types.ts";
-  import InstallButton from "./InstallButton.svelte";
+  import type { Episode } from '../types.ts'
+  import InstallButton from './InstallButton.svelte'
 
   interface Props {
-    episode: Episode;
-    onShowAbout: () => void;
-    onShowEpisodeMenu: () => void;
+    episode: Episode
+    onShowAbout: () => void
+    onShowEpisodeMenu: () => void
   }
 
-  const { episode, onShowAbout, onShowEpisodeMenu }: Props = $props();
+  const { episode, onShowAbout, onShowEpisodeMenu }: Props = $props()
 </script>
 
 <header class="status-bar">
   <div class="header-left">
-    <button class="icon-btn" onclick={onShowAbout} aria-label="このサイトについて">
-      ℹ️
-    </button>
+    <button class="icon-btn" onclick={onShowAbout} aria-label="このサイトについて"> ℹ️ </button>
     <a
       class="icon-btn"
       href="/michixa/feed.xml"
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="RSSフィード">📡</a
-    >
+      aria-label="RSSフィード">📡</a>
   </div>
   <span class="header-center" aria-live="polite" aria-atomic="true">
     <span class="episode-info">
-      {#if typeof episode.index === "number"}第{episode.index}話{/if}「{episode.title}」
+      {#if typeof episode.index === 'number'}第{episode.index}話{/if}「{episode.title}」
     </span>
   </span>
   <span class="header-right" aria-live="polite" aria-atomic="true">
     <InstallButton />
-    <button class="icon-btn" onclick={onShowEpisodeMenu} aria-label="話を選択">
-      📕
-    </button>
+    <button class="icon-btn" onclick={onShowEpisodeMenu} aria-label="話を選択"> 📕 </button>
   </span>
 </header>
 
@@ -49,7 +44,7 @@
     color: #ffffff;
     padding-inline: 1rem;
     padding-block: 0.5rem;
-    font-family: "Hiragino Kaku Gothic Pro", "Noto Sans JP", system-ui, sans-serif;
+    font-family: 'Hiragino Kaku Gothic Pro', 'Noto Sans JP', system-ui, sans-serif;
     z-index: 10;
   }
 

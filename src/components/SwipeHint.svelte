@@ -1,20 +1,19 @@
 <script lang="ts">
-  import ChevronSvg from "./ChevronSvg.svelte";
+  import ChevronSvg from './ChevronSvg.svelte'
 
   interface Props {
-    direction: "prev" | "next";
-    progress: number;
+    direction: 'prev' | 'next'
+    progress: number
   }
 
-  const { direction, progress }: Props = $props();
+  const { direction, progress }: Props = $props()
 </script>
 
 <div
   class="swipe-hint"
   style:opacity={progress}
   style:transform="translate(-50%, -50%) scale({0.5 + 0.5 * progress})"
-  aria-hidden="true"
->
+  aria-hidden="true">
   <ChevronSvg {direction} size="2.5rem" />
 </div>
 
@@ -31,7 +30,9 @@
     align-items: center;
     justify-content: center;
     pointer-events: none;
-    transition: opacity 0.15s, transform 0.15s;
+    transition:
+      opacity 0.15s,
+      transform 0.15s;
     z-index: 20;
   }
 </style>

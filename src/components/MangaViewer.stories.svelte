@@ -1,10 +1,10 @@
 <script module>
-  import { defineMeta } from '@storybook/addon-svelte-csf';
-  import { expect, fn } from 'storybook/test';
-  import MangaViewer from './MangaViewer.svelte';
+  import { defineMeta } from '@storybook/addon-svelte-csf'
+  import { expect, fn } from 'storybook/test'
+  import MangaViewer from './MangaViewer.svelte'
 
   const IMG =
-    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==";
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
 
   const { Story } = defineMeta({
     component: MangaViewer,
@@ -18,7 +18,7 @@
       onprev: fn(),
       onnext: fn(),
     },
-  });
+  })
 </script>
 
 <Story
@@ -36,17 +36,16 @@
     onnext: fn(),
   }}
   play={async ({ canvas, canvasElement, args, userEvent }) => {
-    const figure = canvasElement.querySelector('figure[aria-label="第1話「はじまり」"]');
-    await expect(figure).not.toBeNull();
-    await expect(figure?.querySelectorAll('img').length).toBe(2);
+    const figure = canvasElement.querySelector('figure[aria-label="第1話「はじまり」"]')
+    await expect(figure).not.toBeNull()
+    await expect(figure?.querySelectorAll('img').length).toBe(2)
 
-    const nextBtn = canvas.getByRole('button', { name: /次の話/ });
-    await userEvent.click(nextBtn);
-    await expect(args.onnext).toHaveBeenCalledOnce();
+    const nextBtn = canvas.getByRole('button', { name: /次の話/ })
+    await userEvent.click(nextBtn)
+    await expect(args.onnext).toHaveBeenCalledOnce()
 
-    await expect(canvas.queryByRole('button', { name: /前の話/ })).toBeNull();
-  }}
->
+    await expect(canvas.queryByRole('button', { name: /前の話/ })).toBeNull()
+  }}>
   {#snippet children(args)}
     <MangaViewer
       currentEpisode={args.currentEpisode}
@@ -54,8 +53,7 @@
       nextEpisode={args.nextEpisode}
       xIntentUrl={args.xIntentUrl}
       onprev={args.onprev}
-      onnext={args.onnext}
-    />
+      onnext={args.onnext} />
   {/snippet}
 </Story>
 
@@ -74,12 +72,11 @@
     onnext: fn(),
   }}
   play={async ({ canvas, canvasElement }) => {
-    const figure = canvasElement.querySelector('figure[aria-label="第1話「はじまり」"]');
-    await expect(figure).not.toBeNull();
-    await expect(canvas.queryByRole('button', { name: /前の話/ })).toBeNull();
-    await expect(canvas.getByRole('button', { name: /次の話/ })).toBeInTheDocument();
-  }}
->
+    const figure = canvasElement.querySelector('figure[aria-label="第1話「はじまり」"]')
+    await expect(figure).not.toBeNull()
+    await expect(canvas.queryByRole('button', { name: /前の話/ })).toBeNull()
+    await expect(canvas.getByRole('button', { name: /次の話/ })).toBeInTheDocument()
+  }}>
   {#snippet children(args)}
     <MangaViewer
       currentEpisode={args.currentEpisode}
@@ -87,8 +84,7 @@
       nextEpisode={args.nextEpisode}
       xIntentUrl={args.xIntentUrl}
       onprev={args.onprev}
-      onnext={args.onnext}
-    />
+      onnext={args.onnext} />
   {/snippet}
 </Story>
 
@@ -107,12 +103,11 @@
     onnext: fn(),
   }}
   play={async ({ canvas, canvasElement }) => {
-    const figure = canvasElement.querySelector('figure[aria-label="第5話「さいご」"]');
-    await expect(figure).not.toBeNull();
-    await expect(canvas.queryByRole('button', { name: /次の話/ })).toBeNull();
-    await expect(canvas.getByRole('button', { name: /前の話/ })).toBeInTheDocument();
-  }}
->
+    const figure = canvasElement.querySelector('figure[aria-label="第5話「さいご」"]')
+    await expect(figure).not.toBeNull()
+    await expect(canvas.queryByRole('button', { name: /次の話/ })).toBeNull()
+    await expect(canvas.getByRole('button', { name: /前の話/ })).toBeInTheDocument()
+  }}>
   {#snippet children(args)}
     <MangaViewer
       currentEpisode={args.currentEpisode}
@@ -120,8 +115,7 @@
       nextEpisode={args.nextEpisode}
       xIntentUrl={args.xIntentUrl}
       onprev={args.onprev}
-      onnext={args.onnext}
-    />
+      onnext={args.onnext} />
   {/snippet}
 </Story>
 
@@ -140,12 +134,11 @@
     onnext: fn(),
   }}
   play={async ({ canvas, canvasElement }) => {
-    const figure = canvasElement.querySelector('figure[aria-label="「りれきしょ」"]');
-    await expect(figure).not.toBeNull();
-    await expect(canvas.queryByRole('button', { name: /前の話/ })).toBeNull();
-    await expect(canvas.getByRole('button', { name: /次の話/ })).toBeInTheDocument();
-  }}
->
+    const figure = canvasElement.querySelector('figure[aria-label="「りれきしょ」"]')
+    await expect(figure).not.toBeNull()
+    await expect(canvas.queryByRole('button', { name: /前の話/ })).toBeNull()
+    await expect(canvas.getByRole('button', { name: /次の話/ })).toBeInTheDocument()
+  }}>
   {#snippet children(args)}
     <MangaViewer
       currentEpisode={args.currentEpisode}
@@ -153,7 +146,6 @@
       nextEpisode={args.nextEpisode}
       xIntentUrl={args.xIntentUrl}
       onprev={args.onprev}
-      onnext={args.onnext}
-    />
+      onnext={args.onnext} />
   {/snippet}
 </Story>

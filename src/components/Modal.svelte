@@ -1,22 +1,17 @@
 <script lang="ts">
-  import type { Snippet } from "svelte";
+  import type { Snippet } from 'svelte'
 
   interface Props {
-    title: string;
-    titleId: string;
-    onclose: () => void;
-    children: Snippet;
+    title: string
+    titleId: string
+    onclose: () => void
+    children: Snippet
   }
 
-  const { title = '', titleId = '', onclose = () => {}, children }: Props = $props();
+  const { title = '', titleId = '', onclose = () => {}, children }: Props = $props()
 </script>
 
-<div
-  class="modal-backdrop"
-  aria-hidden="true"
-  onclick={onclose}
-  onkeydown={() => {}}
->
+<div class="modal-backdrop" aria-hidden="true" onclick={onclose} onkeydown={() => {}}>
   <div
     class="modal"
     role="dialog"
@@ -24,9 +19,8 @@
     aria-labelledby={titleId}
     tabindex="-1"
     aria-hidden="false"
-    onclick={(e) => e.stopPropagation()}
-    onkeydown={(e) => e.stopPropagation()}
-  >
+    onclick={e => e.stopPropagation()}
+    onkeydown={e => e.stopPropagation()}>
     <button class="modal-close" onclick={onclose} aria-label="閉じる">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
         <line x1="4" y1="4" x2="20" y2="20" />
@@ -80,7 +74,7 @@
   }
 
   .modal :global(ul li) {
-    list-style-type: "- ";
+    list-style-type: '- ';
   }
 
   .modal :global(a) {

@@ -1,7 +1,7 @@
 <script module>
-  import { defineMeta } from '@storybook/addon-svelte-csf';
-  import { fn } from 'storybook/test';
-  import Modal from './Modal.svelte';
+  import { defineMeta } from '@storybook/addon-svelte-csf'
+  import { fn } from 'storybook/test'
+  import Modal from './Modal.svelte'
 
   const { Story } = defineMeta({
     component: Modal,
@@ -12,7 +12,7 @@
       titleId: 'modal-title',
       onclose: fn(),
     },
-  });
+  })
 </script>
 
 <Story name="Default">

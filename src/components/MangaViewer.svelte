@@ -1,71 +1,83 @@
 <script lang="ts">
-  import type { Episode } from "../types.ts";
-  import NavButton from "./NavButton.svelte";
-  import SwipeHint from "./SwipeHint.svelte";
+  import type { Episode } from '../types.ts'
+  import NavButton from './NavButton.svelte'
+  import SwipeHint from './SwipeHint.svelte'
 
   interface Props {
-    currentEpisode: Episode;
-    prevEpisode: Episode | null;
-    nextEpisode: Episode | null;
-    xIntentUrl: string;
-    onprev: () => void;
-    onnext: () => void;
+    currentEpisode: Episode
+    prevEpisode: Episode | null
+    nextEpisode: Episode | null
+    xIntentUrl: string
+    onprev: () => void
+    onnext: () => void
   }
 
-  const { currentEpisode, prevEpisode, nextEpisode, xIntentUrl, onprev, onnext }: Props =
-    $props();
+  const { currentEpisode, prevEpisode, nextEpisode, xIntentUrl, onprev, onnext }: Props = $props()
 
-  let imagesLoaded = $state(false);
-  let loadedImageCount = $state(0);
+  let imagesLoaded = $state(false)
+  let loadedImageCount = $state(0)
 
   $effect(() => {
-    void currentEpisode;
-    if (!currentEpisode) return;
-    loadedImageCount = 0;
-    imagesLoaded = currentEpisode.imageUrls.length === 0;
-  });
+    void currentEpisode
+    if (!currentEpisode) return
+    loadedImageCount = 0
+    imagesLoaded = currentEpisode.imageUrls.length === 0
+  })
 
   function onImageLoad(): void {
-    loadedImageCount++;
+    loadedImageCount++
     if (loadedImageCount >= currentEpisode.imageUrls.length) {
-      imagesLoaded = true;
+      imagesLoaded = true
     }
   }
 
-  const SWIPE_THRESHOLD = 200;
-  let dragStartX = $state<number | null>(null);
-  let dragCurrentDx = $state(0);
+  const SWIPE_THRESHOLD = 200
+  let dragStartX = $state<number | null>(null)
+  let dragCurrentDx = $state(0)
 
   const swipeProgress = $derived(
     dragStartX !== null ? Math.min(Math.abs(dragCurrentDx) / SWIPE_THRESHOLD, 1) : 0,
-  );
+  )
 
   function onDragStart(x: number): void {
-    dragStartX = x;
-    dragCurrentDx = 0;
+    dragStartX = x
+    dragCurrentDx = 0
   }
 
   function onDragMove(x: number): void {
-    if (dragStartX === null) return;
-    dragCurrentDx = x - dragStartX;
+    if (dragStartX === null) return
+    dragCurrentDx = x - dragStartX
   }
 
   function onDragEnd(x: number): void {
-    if (dragStartX === null) return;
-    const dx = x - dragStartX;
-    dragStartX = null;
-    dragCurrentDx = 0;
-    if (Math.abs(dx) < SWIPE_THRESHOLD) return;
-    if (dx < 0) onnext();
-    else onprev();
+    if (dragStartX === null) return
+    const dx = x - dragStartX
+    dragStartX = null
+    dragCurrentDx = 0
+    if (Math.abs(dx) < SWIPE_THRESHOLD) return
+    if (dx < 0) onnext()
+    else onprev()
   }
 
-  function handleTouchStart(e: TouchEvent): void { onDragStart(e.touches[0].clientX); }
-  function handleTouchMove(e: TouchEvent): void { onDragMove(e.touches[0].clientX); }
-  function handleTouchEnd(e: TouchEvent): void { onDragEnd(e.changedTouches[0].clientX); }
-  function handleMouseDown(e: MouseEvent): void { e.preventDefault(); onDragStart(e.clientX); }
-  function handleMouseMove(e: MouseEvent): void { onDragMove(e.clientX); }
-  function handleMouseUp(e: MouseEvent): void { onDragEnd(e.clientX); }
+  function handleTouchStart(e: TouchEvent): void {
+    onDragStart(e.touches[0].clientX)
+  }
+  function handleTouchMove(e: TouchEvent): void {
+    onDragMove(e.touches[0].clientX)
+  }
+  function handleTouchEnd(e: TouchEvent): void {
+    onDragEnd(e.changedTouches[0].clientX)
+  }
+  function handleMouseDown(e: MouseEvent): void {
+    e.preventDefault()
+    onDragStart(e.clientX)
+  }
+  function handleMouseMove(e: MouseEvent): void {
+    onDragMove(e.clientX)
+  }
+  function handleMouseUp(e: MouseEvent): void {
+    onDragEnd(e.clientX)
+  }
 </script>
 
 <div
@@ -76,14 +88,10 @@
   ontouchend={handleTouchEnd}
   onmousedown={handleMouseDown}
   onmousemove={handleMouseMove}
-  onmouseup={handleMouseUp}
->
+  onmouseup={handleMouseUp}>
   <NavButton direction="prev" episode={prevEpisode} onclick={onprev} />
   {#if dragCurrentDx !== 0}
-    <SwipeHint
-      direction={dragCurrentDx >= 0 ? "prev" : "next"}
-      progress={swipeProgress}
-    />
+    <SwipeHint direction={dragCurrentDx >= 0 ? 'prev' : 'next'} progress={swipeProgress} />
   {/if}
 
   <figure
@@ -91,8 +99,7 @@
     hidden={!imagesLoaded}
     aria-label="{typeof currentEpisode.index === 'number'
       ? `第${currentEpisode.index}話`
-      : ''}「{currentEpisode.title}」"
-  >
+      : ''}「{currentEpisode.title}」">
     {#each currentEpisode.imageUrls as url, i}
       <img
         src={url}
@@ -102,8 +109,7 @@
         class="manga-image"
         loading="eager"
         draggable="false"
-        onload={onImageLoad}
-      />
+        onload={onImageLoad} />
     {/each}
   </figure>
 
@@ -115,14 +121,12 @@
       href={xIntentUrl}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Xで共有"
-    >
+      aria-label="Xで共有">
       <img
         src="{import.meta.env.BASE_URL}/x-icon.svg"
         alt="Xで共有"
         aria-hidden="true"
-        class="share-icon"
-      />
+        class="share-icon" />
     </a>
   </nav>
 </div>

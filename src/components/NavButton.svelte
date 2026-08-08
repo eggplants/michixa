@@ -1,31 +1,29 @@
 <script lang="ts">
-  import type { Episode } from "../types.ts";
-  import ChevronSvg from "./ChevronSvg.svelte";
+  import type { Episode } from '../types.ts'
+  import ChevronSvg from './ChevronSvg.svelte'
 
   interface Props {
-    direction: "prev" | "next";
-    episode: Episode | null;
-    onclick: () => void;
+    direction: 'prev' | 'next'
+    episode: Episode | null
+    onclick: () => void
   }
 
-  const { direction, episode, onclick }: Props = $props();
+  const { direction, episode, onclick }: Props = $props()
 
   const episodeString = $derived(
-    episode
-      ? typeof episode.index === "number"
-        ? `第${episode.index}話`
-        : ""
-      : "",
-  );
+    episode ? (typeof episode.index === 'number' ? `第${episode.index}話` : '') : '',
+  )
 </script>
 
 <nav class="nav-side nav-side-{direction}" aria-label="{direction === 'prev' ? '前' : '次'}の話へ">
   {#if episode}
     <button
       class="nav-btn"
-      onclick={(e) => { onclick(); e.currentTarget.blur(); }}
-      aria-label="{direction === 'prev' ? '前' : '次'}の話：{episodeString}「{episode.title}」"
-    >
+      onclick={e => {
+        onclick()
+        e.currentTarget.blur()
+      }}
+      aria-label="{direction === 'prev' ? '前' : '次'}の話：{episodeString}「{episode.title}」">
       <ChevronSvg {direction} />
     </button>
   {/if}
@@ -72,5 +70,4 @@
   .nav-btn:hover {
     background: rgba(240, 145, 153, 0.9);
   }
-
 </style>

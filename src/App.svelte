@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { EpisodeEntry, Episode } from "./types.ts";
-  import { MangaViewer, Modal, StatusBar } from "./components";
+  import { MangaViewer, Modal, StatusBar } from './components'
+  import type { EpisodeEntry, Episode } from './types.ts'
   import {
     buildShareUrl,
     buildXIntentUrl,
@@ -8,105 +8,98 @@
     resolveImageUrl,
     saveIndexToCookie,
     sortEpisodeEntries,
-  } from "./utils.ts";
+  } from './utils.ts'
 
   const DATA_URL =
-    "https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4komaData.json";
+    'https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4komaData.json'
 
-  let loadState = $state<"loading" | "error" | "ready">("loading");
-  let episodes = $state<Episode[]>([]);
-  let currentEpisodeIdx = $state(0);
-  let errorMessage = $state("");
+  let loadState = $state<'loading' | 'error' | 'ready'>('loading')
+  let episodes = $state<Episode[]>([])
+  let currentEpisodeIdx = $state(0)
+  let errorMessage = $state('')
 
   $effect(() => {
-    void currentEpisodeIdx;
-    window.scrollTo({ top: 0, behavior: "instant" });
-  });
+    void currentEpisodeIdx
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  })
 
   async function loadData(): Promise<void> {
     try {
-      const resp = await fetch(DATA_URL);
-      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-      const data: EpisodeEntry[] = (await resp.json()) as EpisodeEntry[];
+      const resp = await fetch(DATA_URL)
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
+      const data: EpisodeEntry[] = (await resp.json()) as EpisodeEntry[]
 
-      const grouped: Episode[] = sortEpisodeEntries(data).map((entry) => ({
+      const grouped: Episode[] = sortEpisodeEntries(data).map(entry => ({
         index: entry.Index,
         title: entry.Title,
         imageUrls: entry.ImagesUrl.map(resolveImageUrl),
-      }));
+      }))
 
-      episodes = grouped;
-      const urlIndex = new URLSearchParams(window.location.search).get("i");
+      episodes = grouped
+      const urlIndex = new URLSearchParams(window.location.search).get('i')
       if (urlIndex !== null) {
-        const found = grouped.findIndex((ep) => String(ep.index) === urlIndex);
-        currentEpisodeIdx = found >= 0 ? found : 0;
+        const found = grouped.findIndex(ep => String(ep.index) === urlIndex)
+        currentEpisodeIdx = found >= 0 ? found : 0
       } else {
-        currentEpisodeIdx = Math.min(
-          loadIndexFromCookie(document.cookie),
-          grouped.length - 1,
-        );
+        currentEpisodeIdx = Math.min(loadIndexFromCookie(document.cookie), grouped.length - 1)
       }
-      loadState = "ready";
+      loadState = 'ready'
     } catch (e) {
-      errorMessage = e instanceof Error ? e.message : String(e);
-      loadState = "error";
+      errorMessage = e instanceof Error ? e.message : String(e)
+      loadState = 'error'
     }
   }
 
-  void loadData();
+  void loadData()
 
-  const currentEpisode = $derived(episodes[currentEpisodeIdx]);
+  const currentEpisode = $derived(episodes[currentEpisodeIdx])
   const xIntentUrl = $derived(
-    currentEpisode ? buildXIntentUrl(currentEpisode, window.location.href) : "",
-  );
-  const prevEpisode = $derived(
-    currentEpisodeIdx > 0 ? episodes[currentEpisodeIdx - 1] : null,
-  );
+    currentEpisode ? buildXIntentUrl(currentEpisode, window.location.href) : '',
+  )
+  const prevEpisode = $derived(currentEpisodeIdx > 0 ? episodes[currentEpisodeIdx - 1] : null)
   const nextEpisode = $derived(
-    currentEpisodeIdx < episodes.length - 1
-      ? episodes[currentEpisodeIdx + 1]
-      : null,
-  );
+    currentEpisodeIdx < episodes.length - 1 ? episodes[currentEpisodeIdx + 1] : null,
+  )
 
   function prev(): void {
     if (currentEpisodeIdx > 0) {
-      currentEpisodeIdx--;
-      saveIndexToCookie(currentEpisodeIdx);
+      currentEpisodeIdx--
+      saveIndexToCookie(currentEpisodeIdx)
     }
   }
 
   function next(): void {
     if (currentEpisodeIdx < episodes.length - 1) {
-      currentEpisodeIdx++;
-      saveIndexToCookie(currentEpisodeIdx);
+      currentEpisodeIdx++
+      saveIndexToCookie(currentEpisodeIdx)
     }
   }
 
   $effect(() => {
-    if (loadState !== "ready" || !currentEpisode) return;
-    history.replaceState(null, "", buildShareUrl(currentEpisode.index, window.location.href));
-  });
+    if (loadState !== 'ready' || !currentEpisode) return
+    history.replaceState(null, '', buildShareUrl(currentEpisode.index, window.location.href))
+  })
 
-  let showAbout = $state(false);
-  let showEpisodeMenu = $state(false);
+  let showAbout = $state(false)
+  let showEpisodeMenu = $state(false)
 
   function handleKeydown(e: KeyboardEvent): void {
-    if (e.key === "Escape") {
-      showAbout = false;
-      showEpisodeMenu = false;
-      return;
+    if (e.key === 'Escape') {
+      showAbout = false
+      showEpisodeMenu = false
+      return
     }
-    if (showAbout || showEpisodeMenu) return;
-    if (e.key === "ArrowLeft") prev();
-    if (e.key === "ArrowRight") next();
+    if (showAbout || showEpisodeMenu) return
+    if (e.key === 'ArrowLeft') prev()
+    if (e.key === 'ArrowRight') next()
   }
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
 
-{#if loadState === "loading"}
+{#if loadState === 'loading'}
   <div class="overlay" role="status" aria-live="polite">読み込み中...</div>
-{:else if loadState === "error"}
+{:else if loadState === 'error'}
   <div class="overlay error" role="alert">
     データの読み込みに失敗しました: {errorMessage}
   </div>
@@ -115,8 +108,7 @@
     <StatusBar
       episode={currentEpisode}
       onShowAbout={() => (showAbout = true)}
-      onShowEpisodeMenu={() => (showEpisodeMenu = true)}
-    />
+      onShowEpisodeMenu={() => (showEpisodeMenu = true)} />
 
     <main aria-label="漫画ビューワー">
       <MangaViewer
@@ -125,8 +117,7 @@
         {nextEpisode}
         {xIntentUrl}
         onprev={prev}
-        onnext={next}
-      />
+        onnext={next} />
     </main>
   </div>
 {/if}
@@ -136,17 +127,14 @@
     <select
       class="episode-select"
       aria-label="話を選択"
-      onchange={(e) => {
-        currentEpisodeIdx = Number(e.currentTarget.value);
-        saveIndexToCookie(currentEpisodeIdx);
-        showEpisodeMenu = false;
-      }}
-    >
+      onchange={e => {
+        currentEpisodeIdx = Number(e.currentTarget.value)
+        saveIndexToCookie(currentEpisodeIdx)
+        showEpisodeMenu = false
+      }}>
       {#each episodes as ep, i}
         <option value={i} selected={i === currentEpisodeIdx}>
-          {typeof ep.index === "number"
-            ? `第${ep.index}話`
-            : ""}「{ep.title}」
+          {typeof ep.index === 'number' ? `第${ep.index}話` : ''}「{ep.title}」
         </option>
       {/each}
     </select>
@@ -162,46 +150,33 @@
     <ul>
       <li>
         漫画:
-        <a
-          href="http://momoirocode.web.fc2.com"
-          target="_blank"
-          rel="noopener noreferrer">momoirocode.web.fc2.com</a
-        >
+        <a href="http://momoirocode.web.fc2.com" target="_blank" rel="noopener noreferrer"
+          >momoirocode.web.fc2.com</a>
       </li>
       <li>
         Booth:
-        <a
-          href="https://momotori.booth.pm"
-          target="_blank"
-          rel="noopener noreferrer">momotori.booth.pm</a
-        >
+        <a href="https://momotori.booth.pm" target="_blank" rel="noopener noreferrer"
+          >momotori.booth.pm</a>
       </li>
       <li>
         DLsite:
         <a
           href="https://www.dlsite.com/home/circle/profile/=/maker_id/RG24350.html"
           target="_blank"
-          rel="noopener noreferrer">桃色CODE / RG24350</a
-        >
+          rel="noopener noreferrer">桃色CODE / RG24350</a>
       </li>
     </ul>
     <u>ソースコード</u>
     <ul>
       <li>
         漫画データ:
-        <a
-          href="https://github.com/iranika/mo-code-4koma"
-          target="_blank"
-          rel="noopener noreferrer">iranika/mo-code-4koma</a
-        >
+        <a href="https://github.com/iranika/mo-code-4koma" target="_blank" rel="noopener noreferrer"
+          >iranika/mo-code-4koma</a>
       </li>
       <li>
         リポジトリ:
-        <a
-          href="https://github.com/eggplants/michixa"
-          target="_blank"
-          rel="noopener noreferrer">eggplants/michixa</a
-        >
+        <a href="https://github.com/eggplants/michixa" target="_blank" rel="noopener noreferrer"
+          >eggplants/michixa</a>
       </li>
     </ul>
   </Modal>
@@ -231,7 +206,7 @@
     border-radius: 4px;
     color: #6b1a24;
     font-size: 0.9rem;
-    font-family: "Hiragino Kaku Gothic Pro", "Noto Sans JP", system-ui, sans-serif;
+    font-family: 'Hiragino Kaku Gothic Pro', 'Noto Sans JP', system-ui, sans-serif;
     cursor: pointer;
     padding: 0.5rem;
   }

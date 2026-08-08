@@ -32,3 +32,6 @@ dist-ssr
 storybook-static
 
 coverage/
+
+# svelte-check --tsgo intermediate output
+.svelte-check/
