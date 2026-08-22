@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { MangaViewer, Modal, StatusBar } from './components'
+  import { FullscreenButton, MangaViewer, Modal, StatusBar } from './components'
   import type { EpisodeEntry, Episode } from './types.ts'
   import {
     buildShareUrl,
@@ -119,6 +119,8 @@
         onprev={prev}
         onnext={next} />
     </main>
+
+    <FullscreenButton />
   </div>
 {/if}
 

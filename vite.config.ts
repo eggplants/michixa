@@ -58,6 +58,7 @@ export default defineConfig({
         theme_color: '#f09199',
         background_color: '#f09199',
         display: 'standalone',
+        orientation: 'landscape',
         scope: '/michixa/',
         start_url: '/michixa/',
         icons: [
