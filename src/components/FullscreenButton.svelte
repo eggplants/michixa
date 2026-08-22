@@ -1,13 +1,13 @@
 <script lang="ts">
+  import { on } from 'svelte/events'
+
   let isFullscreen = $state(false)
 
-  $effect(() => {
-    const sync = (): void => {
+  $effect(() =>
+    on(document, 'fullscreenchange', () => {
       isFullscreen = document.fullscreenElement !== null
-    }
-    document.addEventListener('fullscreenchange', sync)
-    return () => document.removeEventListener('fullscreenchange', sync)
-  })
+    }),
+  )
 
   async function lockLandscape(): Promise<void> {
     // 横画面固定は Android Chrome などタッチ端末のフルスクリーン時のみ有効。
