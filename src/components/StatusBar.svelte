@@ -9,6 +9,24 @@
   }
 
   const { episode, onShowAbout, onShowEpisodeMenu }: Props = $props()
+
+  let feedCopied = $state(false)
+  let copyResetTimer: ReturnType<typeof setTimeout> | undefined
+
+  async function copyFeedUrl(event: MouseEvent & { currentTarget: HTMLAnchorElement }) {
+    if (!navigator.clipboard) return
+    event.preventDefault()
+    try {
+      await navigator.clipboard.writeText(event.currentTarget.href)
+    } catch {
+      return
+    }
+    feedCopied = true
+    clearTimeout(copyResetTimer)
+    copyResetTimer = setTimeout(() => {
+      feedCopied = false
+    }, 2000)
+  }
 </script>
 
 <header class="status-bar">
@@ -19,7 +37,11 @@
       href="/michixa/feed.xml"
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="RSSフィード">📡</a>
+      onclick={copyFeedUrl}
+      aria-label="RSSフィードのURLをコピー">{feedCopied ? '✅' : '📡'}</a>
+    <span class="visually-hidden" role="status" aria-live="polite">
+      {feedCopied ? 'RSSフィードのURLをコピーしました' : ''}
+    </span>
   </div>
   <span class="header-center" aria-live="polite" aria-atomic="true">
     <span class="episode-info">
@@ -94,5 +116,16 @@
 
   .icon-btn:hover {
     color: #fff;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 </style>
