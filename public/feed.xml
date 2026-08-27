@@ -4,7 +4,7 @@
         <title>非公式道草屋ばっくやーど漫画ビューア</title>
         <link>https://eggplants.github.io/michixa/</link>
         <description>道草屋ばっくやーど漫画の非公式ビューア。</description>
-        <lastBuildDate>Wed, 26 Aug 2026 01:15:37 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 27 Aug 2026 07:45:46 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>ja</language>
@@ -4071,6 +4071,15 @@
 <img src="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/399-4.webp" alt="第399話「撮影」" style="width:100%;display:block">
 <img src="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/sp.webp" alt="第399話「撮影」" style="width:100%;display:block">]]></content:encoded>
             <enclosure length="0" type="image/webp" url="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/399-1.webp"/>
+        </item>
+        <item>
+            <title><![CDATA[第400話「こだわり」]]></title>
+            <link>https://eggplants.github.io/michixa/?i=400</link>
+            <guid isPermaLink="false">https://eggplants.github.io/michixa/?i=400</guid>
+            <pubDate>Thu, 27 Aug 2026 07:01:32 GMT</pubDate>
+            <content:encoded><![CDATA[<img src="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/400-1.webp" alt="第400話「こだわり」" style="width:100%;display:block">
+<img src="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/sp.webp" alt="第400話「こだわり」" style="width:100%;display:block">]]></content:encoded>
+            <enclosure length="0" type="image/webp" url="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/400-1.webp"/>
         </item>
     </channel>
 </rss>
