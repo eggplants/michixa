@@ -4,7 +4,7 @@
         <title>非公式道草屋ばっくやーど漫画ビューア</title>
         <link>https://eggplants.github.io/michixa/</link>
         <description>道草屋ばっくやーど漫画の非公式ビューア。</description>
-        <lastBuildDate>Sun, 18 Oct 2026 03:15:10 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 19 Oct 2026 03:27:51 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>ja</language>
@@ -4113,6 +4113,15 @@
 <img src="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/403-3.webp" alt="第403話「とんぼ博士」" style="width:100%;display:block">
 <img src="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/sp.webp" alt="第403話「とんぼ博士」" style="width:100%;display:block">]]></content:encoded>
             <enclosure length="0" type="image/webp" url="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/403-1.webp"/>
+        </item>
+        <item>
+            <title><![CDATA[第404話「同じ穴」]]></title>
+            <link>https://eggplants.github.io/michixa/?i=404</link>
+            <guid isPermaLink="false">https://eggplants.github.io/michixa/?i=404</guid>
+            <pubDate>Sun, 18 Oct 2026 12:27:48 GMT</pubDate>
+            <content:encoded><![CDATA[<img src="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/404-1.webp" alt="第404話「同じ穴」" style="width:100%;display:block">
+<img src="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/sp.webp" alt="第404話「同じ穴」" style="width:100%;display:block">]]></content:encoded>
+            <enclosure length="0" type="image/webp" url="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/404-1.webp"/>
         </item>
     </channel>
 </rss>
