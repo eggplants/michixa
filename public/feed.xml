@@ -4,7 +4,7 @@
         <title>非公式道草屋ばっくやーど漫画ビューア</title>
         <link>https://eggplants.github.io/michixa/</link>
         <description>道草屋ばっくやーど漫画の非公式ビューア。</description>
-        <lastBuildDate>Fri, 20 Nov 2026 05:54:12 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 21 Nov 2026 05:49:02 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>ja</language>
@@ -4132,6 +4132,7 @@
             <guid isPermaLink="false">https://eggplants.github.io/michixa/?i=405</guid>
             <pubDate>Sat, 14 Nov 2026 08:38:02 GMT</pubDate>
             <content:encoded><![CDATA[<img src="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/405-1.webp" alt="第405話「解禁」" style="width:100%;display:block">
+<img src="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/405-2.webp" alt="第405話「解禁」" style="width:100%;display:block">
 <img src="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/sp.webp" alt="第405話「解禁」" style="width:100%;display:block">]]></content:encoded>
             <enclosure length="0" type="image/webp" url="https://raw.githubusercontent.com/iranika/mo-code-4koma/refs/heads/main/4koma/ja/webp/405-1.webp"/>
         </item>
